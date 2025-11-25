@@ -6,8 +6,8 @@ Responsible for periodically retrieving the list of locations from the Weather A
 
 # TODO
 
-- Retrieve the list of locations from the Weather API;
-- Fetch weather data from the OpenWeatherAPI for each location;
-- Publish weather events to RabbitMQ;
-- Ensure persistent and reliable communication with message broker;
-- Implement error handling and retry logic for external API requests;
+- ✅ Retrieve the list of locations from the Weather API;
+- ✅ Fetch weather data from the OpenWeatherAPI for each location;
+- ✅ Publish weather events to RabbitMQ;
+- ✅ Ensure persistent and reliable communication with message broker;
+- ✅ Implement error handling and retry logic for external API requests;
