@@ -6,11 +6,11 @@ The objective is to develop a full-stack application that consumes a public API 
 
 ## SYSTEM DESIGN
 
-![System Design](./docs/diagrams/design-system-v1.png)
+![System Design](./docs/diagrams/design-system.png)
 
-## WIRERAMES
+## WIREFRAMES
 
-![Wireframes](./docs/diagrams/wireframes-v1.png)
+![Wireframes](./docs/diagrams/wireframes.png)
 
 ## PROJECT STRUCTURE
 
