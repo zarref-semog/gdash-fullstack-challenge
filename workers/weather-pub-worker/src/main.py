@@ -6,13 +6,9 @@ import time
 RABBITMQ_URI = ''
 WEATHER_API_URL = ''
 
-RETRY_DELAYS = [60, 180, 300]   # 1, 3 and 5 minutes
+RETRY_DELAYS = [60, 180, 300] # 1, 3 and 5 minutes
 
 def retry(operation, *args, **kwargs):
-    """
-    Retries any operation using the retry delays defined in RETRY_DELAYS.
-    Returns the operation result or raises after all failures.
-    """
     for attempt, delay in enumerate(RETRY_DELAYS, start=1):
         try:
             return operation(*args, **kwargs)
@@ -27,10 +23,6 @@ def retry(operation, *args, **kwargs):
 
 
 def create_queues(channel):
-    """
-    Creates the main queue and the DLQ with proper dead-letter configuration.
-    """
-
     # Dead-letter queue
     channel.queue_declare(queue="weather-data.dlq", durable=True)
 
@@ -46,10 +38,6 @@ def create_queues(channel):
 
 
 def publish_message(queue='', message=None):
-    """
-    Publishes a message to RabbitMQ. Does not retry internally;
-    retry is handled externally by the `retry()` function.
-    """
     params = pika.URLParameters(RABBITMQ_URI)
     params.socket_timeout = 5
 
@@ -85,7 +73,6 @@ def _request_weather(latitude, longitude):
 
 
 def get_locations():
-    """Gets list of locations with retry support."""
     try:
         return retry(_request_locations)
     except Exception:
@@ -94,10 +81,6 @@ def get_locations():
 
 
 def send_to_dlq(payload):
-    """
-    Forces a message into the DLQ explicitly.
-    """
-
     print("[WARN] Sending message to DLQ...")
 
     params = pika.URLParameters(RABBITMQ_URI)
@@ -119,11 +102,6 @@ def send_to_dlq(payload):
 
 
 def get_weather_info(latitude, longitude):
-    """
-    Gets weather info + publishes.
-    If any part fails after retries, message goes to DLQ.
-    """
-
     payload = {"latitude": latitude, "longitude": longitude}
 
     try:
